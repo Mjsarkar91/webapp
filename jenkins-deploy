@@ -1,0 +1,32 @@
+pipeline{
+	agent any
+
+	environment{
+		PATH = "/usr/bin/mvn:$PATH"
+	}
+	stages{
+		stage ("Git Checkout"){
+			steps{
+			git credentials: 'dec-git-project', url: 'https://github.com/Mjsarkar91/webapps'
+			}
+		}
+		stage("Maven Build"){
+		steps{
+		sh "mvn clean package"
+		sh "mv target/*.war target/myappsec.war"
+		}
+	  }
+	  stage("deploy"){
+	  sshagent(['app-deploy']) {
+      sh """ 
+      scp -o StrictHostKeyChecking=no target/myappsec.war ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/webapps
+
+      shh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/shutdown.sh
+
+      shh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/startup.sh
+      
+      """
+      }
+	  }
+	}
+}
