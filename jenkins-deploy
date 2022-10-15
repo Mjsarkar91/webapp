@@ -17,6 +17,7 @@ pipeline{
 		}
 	  }
 	  stage("deploy"){
+	  stepa{
 	  sshagent(['app-deploy']) {
       sh """ 
       scp -o StrictHostKeyChecking=no target/myappsec.war ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/webapps
@@ -26,7 +27,8 @@ pipeline{
       shh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/startup.sh
       
       """
-      }
-      }
-  }
-}
+	     }
+        }
+	   }
+	 }
+   }
