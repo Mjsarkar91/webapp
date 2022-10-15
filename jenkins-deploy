@@ -22,9 +22,9 @@ pipeline{
       sh """ 
       scp -o StrictHostKeyChecking=no target/myappsec.war ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/webapps
 
-      shh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/shutdown.sh
+      ssh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/shutdown.sh
 
-      shh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/startup.sh
+      ssh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/startup.sh
       
       """
 	     }
