@@ -20,11 +20,11 @@ pipeline{
 	            steps{
 	               sshagent(['app-deploy']) {
                            sh """ 
-                           sudo scp -o StrictHostKeyChecking=no target/myappsec.war ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/webapps
+                           scp -o StrictHostKeyChecking=no target/myappsec.war ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/webapps
 
-                           sudo ssh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/shutdown.sh
+                           ssh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/shutdown.sh
 
-                           sudo ssh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/startup.sh
+                           ssh ubuntu@172.31.0.165 /home/ubuntu/prod/apache-tomcat-9.0.68/bin/startup.sh
       
                            """
 	          }
