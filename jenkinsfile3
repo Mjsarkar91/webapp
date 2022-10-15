@@ -1,0 +1,19 @@
+pipeline{
+	agent any
+
+	environment{
+		PATH = "/usr/bin/mvn:$PATH"
+	}
+	stages{
+		stage ("Git Checkout"){
+			steps{
+			git credentials: 'dec-git-project', url: 'https://github.com/Mjsarkar91/webapps'
+			}
+		}
+		stage("Maven Build"){
+		steps{
+		sh "mvn clean"
+		}
+		}
+	}
+}
